@@ -16,7 +16,7 @@ void powerOff();
 void displayMenu();
 void processOption(int option_input);
 void setTimer(); // Unused - requires further implementation
-void displayOptions();
+void displayHelp();
 void run(unsigned int seconds);
 void activateMotor(unsigned int seconds);
 void cancel(); // Undefined - No implementation
@@ -38,8 +38,6 @@ bool microwave_on = false;
 
 // Array of accepted options:
 int options[4] = {1, 2, 3, 0};
-
-
 
 /* The microwave functionality */
 // Check the power button
@@ -82,13 +80,7 @@ void powerOn(){
 }
 
 // The microwave menu
-void displayMenu(){
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("1 - Run");
-  lcd.setCursor(0, 1);
-  lcd.print("2 - Help");
-  
+void displayMenu(){  
   if(Serial.available()>0){
     lcd.clear();
     option = Serial.parseInt();
@@ -101,6 +93,12 @@ void displayMenu(){
       // Display an error
       displayOptionError();
     }
+  }else{
+    lcd.clear();
+  	lcd.setCursor(0, 0);
+  	lcd.print("1 - Run");
+  	lcd.setCursor(0, 1);
+  	lcd.print("2 - Help");
   }
 }
 
@@ -121,7 +119,7 @@ void processOption(int option){
   if(option == 1){
     run(30);
   }else if(option == 2){
-    displayOptions();
+    displayHelp();
   }else{
     displayOptionError();
   }
@@ -137,19 +135,12 @@ void setTimer(){
   lcd.print("0 - 3600 sec");
 }
 
-void displayOptions(){
+void displayHelp(){
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Use 1,2,3,4");
+  lcd.print("Use 1 or 2");
   lcd.setCursor(0, 1);
-  lcd.print("2 - Back");
-  if(Serial.available()>0){
-    option = Serial.parseInt();
-    Serial.println(option);
-    if(option == 2){
-      displayMenu();
-    }
-  }
+  lcd.print("to navigate");
 }
 
 // Display an error message and sound the buzzer
@@ -160,7 +151,7 @@ void displayOptionError(){
   lcd.setCursor(0, 1);
   lcd.print("Options: ");
   lcd.setCursor(10, 1);
-  lcd.print("A,B,C");
+  lcd.print("1 or 2");
   beep(3, 200);
   
   // Redirect to menu
