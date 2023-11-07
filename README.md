@@ -1,4 +1,4 @@
-# microwave_simulation
+# microwave_oven_simulation
 Simulating the working of a microwave using Arduino
 
 ---
