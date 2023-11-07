@@ -37,7 +37,7 @@ int current_btn_state;
 bool microwave_on = false;
 
 // Array of accepted options:
-int options[4] = {1, 2, 3, 0};
+int options[2] = {1, 2};
 
 /* The microwave functionality */
 // Check the power button
@@ -197,7 +197,6 @@ void activateMotor(unsigned int seconds){
   	lcd.print("Time (sec):");
     lcd.setCursor(0, 1);
     lcd.print(i);
-    Serial.println(i);
     delay(1000);
   }
 }
